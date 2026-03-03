@@ -11,15 +11,32 @@ import java.io.Serializable;
  * @author Fred Scott Southeast Community College INFO
  */
 public class User implements Serializable{
-    private String username, password;
+    private int userID;
+    private String username, email, password;
     
     public User() {
         
     }
-
-    public User(String username, String password) {
+    
+    public User(String username, String email, String password) {
         this.username = username;
+        this.email = email;
         this.password = password;
+    }
+
+    public User(int userID, String username, String email, String password) {
+        this.userID = userID;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
     public String getUsername() {
@@ -28,6 +45,14 @@ public class User implements Serializable{
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

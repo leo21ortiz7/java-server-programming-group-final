@@ -42,6 +42,7 @@ public class Public extends HttpServlet {
                 //I've given you the start of a login system here
                 
                 String username = request.getParameter("username");
+                String email = request.getParameter("email");
                 String password = request.getParameter("password");
 
                 //Before you get your DB working you can use the usernames and 
@@ -55,13 +56,16 @@ public class Public extends HttpServlet {
                     // this uses a constructor with only that info
                     // you'll want to update later because you'll likely want
                     // all of the info for the user to store in the session
-                    User loggedInUser = new User(username, password);
+                    User loggedInUser = new User(username, email, password);
                     request.getSession().setAttribute("loggedInUser", loggedInUser);
                     //this forwards to the private controller with an action value
                     url = "/Private?action=gotoProfile";
 
                 }
                 break;
+            }
+            case "register": {
+                //pass
             }
         }
 
