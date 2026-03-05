@@ -12,17 +12,20 @@
         <title>JSP Page</title>
     </head>
      <body>
-        <h1>Sign up for our site!</h1>
+        <h1>Register up for our site!</h1>
         <h2>${message}</h2>
         <form action="Public" method="post">
-            <input type="hidden" name="action" value="login">
-            <label>UserName: </label>
+            <input type="hidden" name="action" value="register">
+            <label>Username: </label>
             <input type="text" name="username">
+            <br>
             <label>Email: </label>
             <input type="text" name="email">
-            <label>PassWord: </label>
+            <br>
+            <label>Password: </label>
             <input type="text" name="password">
-            <input type="submit" value="login">
+            <br>
+            <input type="submit" value="Register">
         </form>
     </body>
 </html>

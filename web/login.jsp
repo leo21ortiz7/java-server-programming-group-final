@@ -15,11 +15,18 @@
         <h2>${message}</h2>
         <form action="Public" method="post">
             <input type="hidden" name="action" value="login">
-            <label>UserName: </label>
+            <label>Username: </label>
             <input type="text" name="username">
-            <label>PassWord: </label>
+            <br>
+            <label>Password: </label>
             <input type="text" name="password">
+            <br>
             <input type="submit" value="login">
+        </form>
+        
+        <form action="Public" method="post">
+            <input type="hidden" name="action" value="goToRegister">
+            <input type="submit" value="Register">
         </form>
     </body>
 </html>

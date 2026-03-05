@@ -31,7 +31,7 @@ public class Public extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String url = "/index.jsp";
+        String url = "/login.jsp";
         String action = request.getParameter("action");
         if (action == null) {
             action = "default";
@@ -64,8 +64,14 @@ public class Public extends HttpServlet {
                 }
                 break;
             }
+            
+            case "goToRegister": {
+                url = "/register.jsp";
+                break;
+            }
+            
             case "register": {
-                //pass
+                break;
             }
         }
 
