@@ -23,10 +23,10 @@
             <br>
             <input type="submit" value="login">
         </form>
-        
+        <br>
         <form action="Public" method="post">
             <input type="hidden" name="action" value="goToRegister">
-            <input type="submit" value="Register">
+            <input type="submit" value="Register New User">
         </form>
     </body>
 </html>

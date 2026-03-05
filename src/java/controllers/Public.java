@@ -8,6 +8,7 @@ import business.User;
 import data.FakeDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,9 @@ public class Public extends HttpServlet {
 
         String url = "/login.jsp";
         String action = request.getParameter("action");
+        
+        ArrayList errors = new ArrayList();
+        
         if (action == null) {
             action = "default";
         }
@@ -71,6 +75,22 @@ public class Public extends HttpServlet {
             }
             
             case "register": {
+                // Validation for new user here
+                User newUser = new User();
+                
+                String username = request.getParameter("username");
+                String email = request.getParameter("email");
+                String password = request.getParameter("password");
+                
+                //validate username
+                
+                
+                //Validate email
+                
+                
+                //Validate password
+                
+                
                 break;
             }
         }
