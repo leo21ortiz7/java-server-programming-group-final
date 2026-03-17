@@ -11,6 +11,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="/nav.jsp" %>
         <h1>Login To Our Site</h1>
         <h2>${message}</h2>
         <form action="Public" method="post">
