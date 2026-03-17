@@ -35,8 +35,16 @@ public class Private extends HttpServlet {
         if(loggedInUser == null) {
             response.sendRedirect("Public");
             return;
+        } else switch (action) {
+            case "goToProfile": {
+                url = "/profile.jsp";
+                break;
+            }
+            case "goToAllUsers": {
+                url = "/allusers.jsp";
+                break;
+            }
         }
-        
         String url = "/profile.jsp";
         
         

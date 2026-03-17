@@ -23,6 +23,7 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <%@include file="/nav.jsp" %>
         <h1>Welcome ${loggedInUser.username}</h1>
     </body>
 </html>

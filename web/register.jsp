@@ -12,7 +12,8 @@
         <title>JSP Page</title>
     </head>
      <body>
-        <h1>Register up for our site!</h1>
+         <%@include file="/nav.jsp" %>
+        <h1>Register for our site!</h1>
         <h2>${message}</h2>
         <form action="Public" method="post">
             <input type="hidden" name="action" value="register">
