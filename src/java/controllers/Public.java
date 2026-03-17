@@ -5,10 +5,12 @@
 package controllers;
 
 import business.User;
-import data.FakeDB;
+import data.UserDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,9 +36,9 @@ public class Public extends HttpServlet {
 
         String url = "/login.jsp";
         String action = request.getParameter("action");
-        
+
         ArrayList errors = new ArrayList();
-        
+
         if (action == null) {
             action = "default";
         }
@@ -44,53 +46,45 @@ public class Public extends HttpServlet {
         switch (action) {
             case "login": {
                 //I've given you the start of a login system here
-                
+
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
 
-                //Before you get your DB working you can use the usernames and 
-                // passwords that are hardcoded in the FakeDB class to test
-                String storedCreds = FakeDB.getPasswordForUsername(username);
-                if (storedCreds == null || !password.equals(storedCreds)) {
+                try {
+                    User user = UserDB.selectUser(username);
+                    if (user == null || !password.equals(user.getPassword())) {
+                        request.setAttribute("message", "invalid credentials");
+                    } else {
+                        User loggedInUser = new User(username, email, password);
+                        request.getSession().setAttribute("loggedInUser", loggedInUser);
+                        //this forwards to the private controller with an action value
+                        url = "/Private?action=gotoProfile";
+                    }
+                    
+                } catch (NamingException | SQLException ex) {
                     request.setAttribute("message", "invalid credentials");
-                } else {
-
-                    //Since the fake users only have a username and password
-                    // this uses a constructor with only that info
-                    // you'll want to update later because you'll likely want
-                    // all of the info for the user to store in the session
-                    User loggedInUser = new User(username, email, password);
-                    request.getSession().setAttribute("loggedInUser", loggedInUser);
-                    //this forwards to the private controller with an action value
-                    url = "/Private?action=gotoProfile";
-
                 }
+
                 break;
             }
-            
+
             case "goToRegister": {
                 url = "/register.jsp";
                 break;
             }
-            
+
             case "register": {
                 // Validation for new user here
                 User newUser = new User();
-                
+
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");
                 String password = request.getParameter("password");
-                
+
                 //validate username
-                
-                
                 //Validate email
-                
-                
                 //Validate password
-                
-                
                 break;
             }
         }
