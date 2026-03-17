@@ -30,6 +30,9 @@ public class Private extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String url = "/profile.jsp";
+        String action = request.getParameter("action");
+        
         User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
         //if the user isn't logged in, direct them to the Public controller
         if(loggedInUser == null) {
@@ -45,7 +48,7 @@ public class Private extends HttpServlet {
                 break;
             }
         }
-        String url = "/profile.jsp";
+        
         
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
