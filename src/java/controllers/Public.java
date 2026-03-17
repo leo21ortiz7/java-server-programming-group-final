@@ -5,7 +5,7 @@
 package controllers;
 
 import business.User;
-import data.UserDB;
+import data.GroupDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -52,7 +52,7 @@ public class Public extends HttpServlet {
                 String password = request.getParameter("password");
 
                 try {
-                    User user = UserDB.selectUser(username);
+                    User user = GroupDB.selectUser(username);
                     if (user == null || !password.equals(user.getPassword())) {
                         request.setAttribute("message", "invalid credentials");
                     } else {
