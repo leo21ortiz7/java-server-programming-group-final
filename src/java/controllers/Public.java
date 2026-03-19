@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Public extends HttpServlet {
 
+    private static final Logger LOG = Logger.getLogger(Public.class.getName());
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,7 +68,8 @@ public class Public extends HttpServlet {
                     }
                     
                 } catch (NamingException | SQLException ex) {
-                    request.setAttribute("message", "invalid credentials");
+                    errors.add("Database down. Try again later.");
+                    LOG.log(Level.SEVERE, "*** Server down", ex);
                 }
 
                 break;
@@ -75,18 +81,57 @@ public class Public extends HttpServlet {
             }
 
             case "register": {
-                // Validation for new user here
-                User newUser = new User();
-
-                String username = request.getParameter("username");
-                String email = request.getParameter("email");
-                String password = request.getParameter("password");
-
-                //validate username
-                //Validate email
-                //Validate password
-                break;
+                try {
+                    // Validation for new user here
+                    User newUser = new User();
+                    
+                    LinkedHashMap<Integer, User> Users = GroupDB.selectUsers();
+                    
+                    String username = request.getParameter("username");
+                    String email = request.getParameter("email");
+                    String password = request.getParameter("password");
+                    
+                    //validate username
+                    
+                    if (username.length() < 4 || username.length() > 20)
+                    {
+                        errors.add("Username must be between 4-20 characters inclusive.");
+                    }
+                    
+                    
+                    
+                    //Validate email
+                    
+                    if (email.length() < 5)
+                    {
+                        errors.add("Email must be more than 5 characters.");
+                    }
+                    
+                    if (email.contains("@") == false)
+                    {
+                        errors.add("Email must contain @ symbol.");
+                    }
+                    
+                    if (email.indexOf(".") <= email.indexOf("@"))
+                    {
+                        errors.add("Email must contain a period after the @ symbol.");
+                    }
+                    
+                    //Validate password
+                    
+                    if (password.length() < 10)
+                    {
+                        errors.add("Password must be more than 10 characters.");
+                    }
+                    
+                    break;
+                } catch (NamingException ex) {
+                    Logger.getLogger(Public.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Public.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+
         }
 
         getServletContext().getRequestDispatcher(url).forward(request, response);
