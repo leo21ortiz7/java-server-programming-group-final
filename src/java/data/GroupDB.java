@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 
 public class GroupDB {
-    
+
     //Awesome comment
     public static int insert(User user) throws NamingException, SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -119,25 +119,22 @@ public class GroupDB {
 
         String query = "SELECT * FROM Users "
                 + "WHERE username = ?";
-        try {
-            ps = connection.prepareStatement(query);
-            ps.setString(1, username);
-            rs = ps.executeQuery();
-            User user = null;
-            if (rs.next()) {
-                user = new User();
-                user.setUsername(rs.getString("username"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password"));
-            }
-            return user;
-        } catch (SQLException e) {
-            System.out.println(e);
-            return null;
-        } finally {
-            rs.close();
-            ps.close();
-            pool.freeConnection(connection);
+
+        ps = connection.prepareStatement(query);
+        ps.setString(1, username);
+        rs = ps.executeQuery();
+        User user = null;
+        if (rs.next()) {
+            user = new User();
+            user.setUsername(rs.getString("username"));
+            user.setEmail(rs.getString("email"));
+            user.setPassword(rs.getString("password"));
         }
+
+        rs.close();
+        ps.close();
+        pool.freeConnection(connection);
+        
+        return user;
     }
 }

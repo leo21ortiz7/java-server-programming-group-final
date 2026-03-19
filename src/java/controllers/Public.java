@@ -15,6 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -36,6 +37,8 @@ public class Public extends HttpServlet {
 
         String url = "/login.jsp";
         String action = request.getParameter("action");
+        
+        HttpSession session = request.getSession();
 
         ArrayList errors = new ArrayList();
 
@@ -57,7 +60,7 @@ public class Public extends HttpServlet {
                         request.setAttribute("message", "invalid credentials");
                     } else {
                         User loggedInUser = new User(username, email, password);
-                        request.getSession().setAttribute("loggedInUser", loggedInUser);
+                        request.setAttribute("loggedInUser", loggedInUser);
                         //this forwards to the private controller with an action value
                         url = "/Private?action=gotoProfile";
                     }

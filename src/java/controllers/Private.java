@@ -5,18 +5,28 @@
 package controllers;
 
 import business.User;
+import data.GroupDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Fred Scott Southeast Community College INFO
  */
 public class Private extends HttpServlet {
+    
+    private static final Logger LOG = Logger.getLogger(Private.class.getName());
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,7 +43,12 @@ public class Private extends HttpServlet {
         String url = "/profile.jsp";
         String action = request.getParameter("action");
         
-        User loggedInUser = (User) request.getSession().getAttribute("loggedInUser");
+        HttpSession session = request.getSession();
+        
+        ArrayList errors = new ArrayList();
+        
+        User loggedInUser = (User) request.getAttribute("loggedInUser");
+        session.setAttribute("loggedInUser", loggedInUser);
         //if the user isn't logged in, direct them to the Public controller
         if(loggedInUser == null) {
             response.sendRedirect("Public");
@@ -45,10 +60,21 @@ public class Private extends HttpServlet {
             }
             case "goToAllUsers": {
                 url = "/allusers.jsp";
+                LinkedHashMap<Integer, User> users = new LinkedHashMap<Integer, User>();
+                
+                try {
+                    users = GroupDB.selectUsers();
+                    request.setAttribute("users", users);
+                } catch (NamingException | SQLException ex) {
+                    errors.add("No users found.");
+                    LOG.log(Level.SEVERE, "*** sql select fail", ex);
+                }
+                
                 break;
             }
         }
         
+        request.setAttribute("errors", errors);
         
         
         getServletContext().getRequestDispatcher(url).forward(request, response);
