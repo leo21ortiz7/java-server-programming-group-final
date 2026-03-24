@@ -111,14 +111,20 @@ public class GroupDB {
 
     }
 
-    public static User selectUser(String username) throws NamingException, SQLException {
+    public static User selectUser(String username, boolean checkMethod) throws NamingException, SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement ps = null;
         ResultSet rs = null;
+        String query = "";
 
-        String query = "SELECT * FROM Users "
-                + "WHERE username = ?";
+        if (checkMethod) { // username, true
+            query = "SELECT * FROM `user` "
+                    + "WHERE username = ?;";
+        } else { // email, false
+            query = "SELECT * FROM `user` "
+                    + "WHERE email = ?;";
+        }
 
         ps = connection.prepareStatement(query);
         ps.setString(1, username);
