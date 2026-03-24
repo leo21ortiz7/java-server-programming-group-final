@@ -60,7 +60,7 @@ public class Public extends HttpServlet {
                 String password = request.getParameter("password");
 
                 try {
-                    User user = GroupDB.selectUser(username);
+                    User user = GroupDB.selectUser(username, true);
                     if (user == null || !password.equals(user.getPassword())) {
                         request.setAttribute("message", "invalid credentials");
                     } else {

@@ -119,10 +119,10 @@ public class GroupDB {
         String query = "";
 
         if (checkMethod) { 
-            query = "SELECT * FROM `user` "
+            query = "SELECT * FROM users "
                     + "WHERE username = ?;";
         } else { 
-            query = "SELECT * FROM `user` "
+            query = "SELECT * FROM users "
                     + "WHERE email = ?;";
         }
 
