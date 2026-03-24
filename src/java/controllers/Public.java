@@ -65,7 +65,7 @@ public class Public extends HttpServlet {
                         request.setAttribute("message", "invalid credentials");
                     } else {
                         User loggedInUser = new User(username, email, password);
-                        request.setAttribute("loggedInUser", loggedInUser);
+                        session.setAttribute("loggedInUser", loggedInUser);
                         //this forwards to the private controller with an action value
                         url = "/Private?action=gotoProfile";
                     }

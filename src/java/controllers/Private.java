@@ -47,8 +47,7 @@ public class Private extends HttpServlet {
         
         ArrayList errors = new ArrayList();
         
-        User loggedInUser = (User) request.getAttribute("loggedInUser");
-        session.setAttribute("loggedInUser", loggedInUser);
+        User loggedInUser = (User) session.getAttribute("loggedInUser");
         //if the user isn't logged in, direct them to the Public controller
         if(loggedInUser == null) {
             response.sendRedirect("Public");
@@ -69,6 +68,23 @@ public class Private extends HttpServlet {
                     errors.add("No users found.");
                     LOG.log(Level.SEVERE, "*** sql select fail", ex);
                 }
+                
+                break;
+            }
+            case "goToEdit": {
+                url = "/edit";
+                break;
+            }
+            case "cancelEdit": {
+                url = "/profile";
+                break;
+            }
+            case "edit": {
+                url = "/edit";
+                String newEmail = request.getParameter("newEmail");
+                String newPassword = request.getParameter("newPassword");
+                
+                // Validate edited user
                 
                 break;
             }

@@ -16,14 +16,14 @@
         <%@include file="/nav.jsp" %>
         <h1>All Users</h1>
         <Table>
-            <tr>
-                <td>Username</td>
-                <td>Email</td>
-            </tr>
+            <thead>
+                <th>Username</th>
+                <th>Email</th>
+            </thead>
             <c:forEach items="${users}" var="user">
                 <tr>
-                    <td>${user.getUsername()}</td>
-                    <td>${user.getEmail()}</td>
+                    <td>${user.value.username}</td>
+                    <td>${user.value.email}</td>
                 </tr>
             </c:forEach>
         </Table>

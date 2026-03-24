@@ -25,5 +25,9 @@
     <body>
         <%@include file="/nav.jsp" %>
         <h1>Welcome ${loggedInUser.username}</h1>
+        <form>
+            <input type="hidden" name="action" value="goToEdit">
+            <input type="submit" value="Edit Info">
+        </form>
     </body>
 </html>

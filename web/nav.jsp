@@ -9,6 +9,6 @@
 <nav>   
     <a href="Public?action=goToRegister">Register</a>
     <a href="Public">Login</a>
-    <a href="Public?action=goToAllUsers">All Users</a>
-    <a href="Public?action=goToProfile">Profile</a>
+    <a href="Private?action=goToAllUsers">All Users</a>
+    <a href="Private?action=goToProfile">Profile</a>
 </nav>
