@@ -9,19 +9,22 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <%@include file="/nav.jsp" %>
         <h1>Login To Our Site</h1>
         <h2>${message}</h2>
-        <form action="Public" method="post">
+        <form action="Public" method="post" class="login">
             <input type="hidden" name="action" value="login">
-            <label>Username: </label>
-            <input type="text" name="username">
-            <br>
-            <label>Password: </label>
-            <input type="text" name="password">
-            <br>
+            <div class="input_container">
+                <label>Username: </label>
+                <input type="text" name="username">
+            </div>
+            <div class="input_container">
+                <label>Password: </label>
+                <input type="text" name="password">
+            </div>
             <input type="submit" value="login">
         </form>
         <br>

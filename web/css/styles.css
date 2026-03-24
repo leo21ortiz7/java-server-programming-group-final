@@ -1,0 +1,150 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Mar 24, 2026, 1:24:41 PM
+    Author     : Mugtaba
+*/
+body{
+    background: #4d0769;
+    color:white;
+    font-family: arial, sans-serif;
+    height: 100%;
+    background: linear-gradient(45deg, #4d0769, #b11500);
+}
+
+.login, .register, .container{
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+    color: white;
+    background: #2b2738;
+    margin: 30vh auto;
+}
+
+.profile{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.container > div{
+    width:50%;
+}
+
+.profile>*{
+    margin-bottom: 15px;
+}
+
+.profile label{
+    font-size: 24px;
+}
+
+
+.profile input{
+    background-color: #2b2738;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    height: 30px;
+}
+.input_container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.input_container input{
+    color: white;
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    height: 30px;
+}
+.input_container label{
+    width: 30%;
+    font-size: 18px;
+}
+
+h1 {
+    text-shadow: 0 0 6px BLACK;
+    text-align: center;
+}
+
+.error_container{
+    color:red;
+}
+
+input[type="submit"]{
+    background: #b11500;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+}
+
+a{
+    color:#4d0769;
+}
+
+nav{
+    position: absolute;
+    inset: 0;
+    height: 80px;
+    background: #2b2738;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px 1px #4d0769;
+}
+
+nav> a {
+    padding: 20px;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+}
+
+nav> a:hover {
+    color: #4d0769;
+}
+
+table, td, th {
+    border-collapse: collapse;
+}
+
+table{
+    background-color: #2b2738;
+}
+
+td,th {
+    border: 1px solid white;
+    padding: 10px;
+    color:white;
+}
+
+th{
+    font-weight: bold;
+}
+
+tr:first-of-type{
+    background-color: #b11500;
+}
+li{
+    padding: 0;
+}
+
+.errors{
+    list-style: none;
+    color:red;
+    text-shadow: 0 0 6px BLACK;
+}
+.container{
+    align-items: center;
+}

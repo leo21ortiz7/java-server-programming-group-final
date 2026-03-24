@@ -94,6 +94,9 @@ public class Public extends HttpServlet {
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
                     
+                    User test = new User();
+                    test = GroupDB.selectUser(username, true);
+                    
                     //validate username
                     
                     if (username.length() < 4 || username.length() > 20)
@@ -101,7 +104,10 @@ public class Public extends HttpServlet {
                         errors.add("Username must be between 4-20 characters inclusive.");
                     }
                     
-                    
+                    if (GroupDB.selectUser(username, true) != null)
+                    {
+                        errors.add("Username is already in the database.");
+                    }
                     
                     //Validate email
                     
@@ -120,12 +126,20 @@ public class Public extends HttpServlet {
                         errors.add("Email must contain a period after the @ symbol.");
                     }
                     
+                    if (GroupDB.selectUser(email, false) != null)
+                    {
+                        errors.add("Email is already in the database.");
+                    }
+                    
                     //Validate password
                     
                     if (password.length() < 10)
                     {
                         errors.add("Password must be more than 10 characters.");
                     }
+                    
+                    // if errors dont change url
+                    // if no errors message in and at login
                     
                     break;
                 } catch (NamingException ex) {

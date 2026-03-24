@@ -10,12 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
      <body>
          <%@include file="/nav.jsp" %>
         <h1>Register for our site!</h1>
         <h2>${message}</h2>
-        <form action="Public" method="post">
+        <form action="Public" method="post" class="register">
             <input type="hidden" name="action" value="register">
             <label>Username: </label>
             <input type="text" name="username">

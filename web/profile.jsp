@@ -21,13 +21,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <%@include file="/nav.jsp" %>
-        <h1>Welcome ${loggedInUser.username}</h1>
-        <form>
-            <input type="hidden" name="action" value="goToEdit">
-            <input type="submit" value="Edit Info">
-        </form>
+        <div class="container">
+            <%@include file="/nav.jsp" %>
+            <h1>Welcome ${loggedInUser.username}</h1>
+            <form>
+                <input type="hidden" name="action" value="goToEdit">
+                <input type="submit" value="Edit Info">
+            </form>
+        </div>
     </body>
 </html>
