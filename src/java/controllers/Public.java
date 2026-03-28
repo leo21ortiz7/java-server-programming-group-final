@@ -99,6 +99,11 @@ public class Public extends HttpServlet {
                     
                     //validate username
                     
+                    if (username == null || username.trim().isEmpty())
+                    {
+                        errors.add("Username is required.");
+                    }
+                    
                     if (username.length() < 4 || username.length() > 20)
                     {
                         errors.add("Username must be between 4-20 characters inclusive.");
@@ -110,6 +115,11 @@ public class Public extends HttpServlet {
                     }
                     
                     //Validate email
+                    
+                    if (email == null || email.trim().isEmpty())
+                        {
+                            errors.add("Email is required.");
+                        }
                     
                     if (email.length() < 5)
                     {
@@ -132,6 +142,11 @@ public class Public extends HttpServlet {
                     }
                     
                     //Validate password
+                    
+                    if (password == null || password.trim().isEmpty())
+                    {
+                        errors.add("Password is required.");
+                    }
                     
                     if (password.length() < 10)
                     {
