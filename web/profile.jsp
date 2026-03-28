@@ -3,6 +3,7 @@
     Author     : Fred Scott Southeast Community College INFO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="business.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
@@ -27,10 +28,15 @@
         <div class="container">
             <%@include file="/nav.jsp" %>
             <h1>Welcome ${loggedInUser.username}</h1>
-            <form>
+            <form action="Private" method="post">
                 <input type="hidden" name="action" value="goToEdit">
                 <input type="submit" value="Edit Info">
             </form>
+            <ul>
+                <c:forEach items="${errors}" var="error">
+                    <li>${error}</li>
+                </c:forEach>
+            </ul>
         </div>
     </body>
 </html>

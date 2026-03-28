@@ -38,30 +38,30 @@ public class GroupDB {
 
     }
 
-//    public static int update(User user) {
-//        ConnectionPool pool = ConnectionPool.getInstance();
-//        Connection connection = pool.getConnection();
-//        PreparedStatement ps = null;
-//
-//        String query = "UPDATE User SET "
-//                + "FirstName = ?, "
-//                + "LastName = ? "
-//                + "WHERE Email = ?";
-//        try {
-//            ps = connection.prepareStatement(query);
-//            ps.setString(1, user.getFirstName());
-//            ps.setString(2, user.getLastName());
-//            ps.setString(3, user.getEmail());
-//
-//            return ps.executeUpdate();
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            return 0;
-//        } finally {
-//            DBUtil.closePreparedStatement(ps);
-//            pool.freeConnection(connection);
-//        }
-//    }
+    public static int update(User oldUser, String newEmail, String newPassword) throws NamingException, SQLException {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement ps = null;
+
+        String query = "UPDATE users SET "
+                + "email = ?, "
+                + "password = ? "
+                + "WHERE username = ?";
+
+        ps = connection.prepareStatement(query);
+        ps.setString(1, newEmail);
+        ps.setString(2, newPassword);
+        ps.setString(3, oldUser.getUsername());
+
+        int rows = ps.executeUpdate();
+        
+        ps.close();
+        pool.freeConnection(connection);
+        
+        User newUser = selectUser(oldUser.getUsername(), true);
+        return rows;
+        
+    }
 //    public static int delete(User user) {
 //        ConnectionPool pool = ConnectionPool.getInstance();
 //        Connection connection = pool.getConnection();
@@ -82,6 +82,7 @@ public class GroupDB {
 //            pool.freeConnection(connection);
 //        }
 //    }
+
     public static LinkedHashMap<Integer, User> selectUsers() throws NamingException, SQLException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
@@ -119,10 +120,10 @@ public class GroupDB {
         ResultSet rs = null;
         String query = "";
 
-        if (checkMethod) { 
+        if (checkMethod) {
             query = "SELECT * FROM users "
                     + "WHERE username = ?;";
-        } else { 
+        } else {
             query = "SELECT * FROM users "
                     + "WHERE email = ?;";
         }
@@ -141,34 +142,43 @@ public class GroupDB {
         rs.close();
         ps.close();
         pool.freeConnection(connection);
-        
+
         return user;
     }
-    
-    public static ArrayList<String> emailValidation (String email)
-    {
+
+    public static ArrayList<String> validateEmail(String email) {
         ArrayList<String> errors = new ArrayList<>();
-        
-        if (email == null || email.trim().isEmpty())
-        {
+
+        if (email == null || email.trim().isEmpty()) {
             errors.add("Email is required.");
         }
-        
-        if (email.length() < 5)
-        {
+
+        if (email.length() < 5) {
             errors.add("Email must be more than 5 characters.");
         }
-                    
-        if (email.contains("@") == false)
-        {
+
+        if (email.contains("@") == false) {
             errors.add("Email must contain @ symbol.");
         }
-                    
-        if (email.indexOf(".") <= email.indexOf("@"))
-        {
+
+        if (email.indexOf(".") <= email.indexOf("@")) {
             errors.add("Email must contain a period after the @ symbol.");
         }
-            
+
+        return errors;
+    }
+
+    public static ArrayList<String> validatePassword(String password) {
+        ArrayList<String> errors = new ArrayList<>();
+
+        if (password == null || password.trim().isEmpty()) {
+            errors.add("Password is required.");
+        }
+
+        if (password.length() < 10) {
+            errors.add("Password must be more than 10 characters.");
+        }
+
         return errors;
     }
 }

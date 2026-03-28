@@ -27,14 +27,13 @@
                         <td>${user.value.username}</td>
                         <td>${user.value.email}</td>
                     </tr>
-                    <c:forEach items="${users}" var="user">
-                        <tr>
-                            <td>${user.getUsername()}</td>
-                            <td>${user.getEmail()}</td>
-                        </tr>
-                    </c:forEach>
-                </Table>
-                <h2>${message}</h2>
-            </div>
-        </body>
-    </html>
+                </c:forEach>
+            </Table>
+            <ul>
+                <c:forEach items="${errors}" var="error">
+                    <li>${error}</li>
+                </c:forEach>
+            </ul>
+        </div>
+    </body>
+</html>
