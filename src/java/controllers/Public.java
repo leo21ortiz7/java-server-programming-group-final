@@ -131,7 +131,7 @@ public class Public extends HttpServlet {
                         errors.add("Email must contain @ symbol.");
                     }
                     
-                    if (email.indexOf(".") <= email.indexOf("@"))
+                    if (email.lastIndexOf(".") <= email.indexOf("@"))
                     {
                         errors.add("Email must contain a period after the @ symbol.");
                     }
