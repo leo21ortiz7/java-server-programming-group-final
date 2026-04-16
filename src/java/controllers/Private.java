@@ -48,8 +48,15 @@ public class Private extends HttpServlet {
             
             ArrayList errors = new ArrayList();
             
-            User accessGrantedUser = (User) session.getAttribute("loggedInUser");
-            User loggedInUser = GroupDB.selectUser(accessGrantedUser.getUsername(), true);
+            User accessGrantedUser = new User();
+            User loggedInUser = null;
+            
+            
+            if (session.getAttribute("loggedInUser") != null) {
+              accessGrantedUser = (User) session.getAttribute("loggedInUser");
+              loggedInUser = GroupDB.selectUser(accessGrantedUser.getUsername(), true);
+            }
+            
             //if the user isn't logged in, direct them to the Public controller
             if(loggedInUser == null) {
                 response.sendRedirect("Public");
