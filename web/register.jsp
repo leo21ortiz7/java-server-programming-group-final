@@ -23,15 +23,18 @@
         </ul>
         <form action="Public" method="post" class="register">
             <input type="hidden" name="action" value="register">
-            <label>Username: </label>
-            <input type="text" name="username" value="${username}">
-            <br>
-            <label>Email: </label>
-            <input type="text" name="email" value="${email}">
-            <br>
-            <label>Password: </label>
-            <input type="text" name="password" value="${password}">
-            <br>
+            <div class="input_container">
+                <label>Username: </label>
+                <input type="text" name="username">
+            </div>
+            <div class="input_container">
+                <label>Email: </label>
+                <input type="text" name="email">
+            </div>
+            <div class="input_container">
+                <label>Password: </label>
+                <input type="text" name="password">
+            </div>
             <input type="submit" value="Register">
         </form>
     </body>
