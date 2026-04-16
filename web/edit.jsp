@@ -19,18 +19,19 @@
 
             <form action="Private" method="post">
                 <input type="hidden" name="action" value="edit">
-                <label>Email:</label>
-                <input type="text" name="newEmail" value="${loggedInUser.email}">
-                <br>
+                <label>Email:</label>s
+                <div class="input_container">
+                    <input type="text" name="newEmail" value="${loggedInUser.email}">
+                </div>
                 <label>Password:</label>
-                <input type="text" name="newPassword" value="${loggedInUser.password}">
-                <br>
+                <div class="input_container">
+                    <input type="text" name="newPassword" value="${loggedInUser.password}">
+                </div>
                 <input type="submit" value="Submit">
+                
+                <input type="hidden" name="action" value="cancel">
+                <input type="submit" value="Cancel">
             </form>
-                <form action="Private" method="post">
-                    <input type="hidden" name="action" value="cancel">
-                    <input type="submit" value="Cancel">
-                </form>
             <ul>
                 <c:forEach items="${errors}" var="error">
                     <li>${error}</li>
