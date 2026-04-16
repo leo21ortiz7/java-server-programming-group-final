@@ -22,17 +22,14 @@
                 <label>Username: </label>
                 <input type="text" name="username">
             </div>
-            <br>
             <div class="input_container">
                 <label>Email: </label>
                 <input type="text" name="email">
             </div>
-            <br>
             <div class="input_container">
                 <label>Password: </label>
                 <input type="text" name="password">
             </div>
-            <br>
             <input type="submit" value="Register">
         </form>
     </body>
