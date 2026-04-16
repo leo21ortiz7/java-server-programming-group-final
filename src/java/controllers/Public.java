@@ -88,6 +88,8 @@ public class Public extends HttpServlet {
                     // Validation for new user here
                     User newUser = new User();
                     
+                    url = "/register.jsp";
+                    
                     LinkedHashMap<Integer, User> Users = GroupDB.selectUsers();
                     
                     String username = request.getParameter("username");
@@ -98,63 +100,95 @@ public class Public extends HttpServlet {
                     test = GroupDB.selectUser(username, true);
                     
                     //validate username
+                    int usernameErrors = 0;
                     
                     if (username == null || username.trim().isEmpty())
                     {
                         errors.add("Username is required.");
+                        usernameErrors++;
                     }
                     
                     if (username.length() < 4 || username.length() > 20)
                     {
                         errors.add("Username must be between 4-20 characters inclusive.");
+                        usernameErrors++;
                     }
                     
                     if (GroupDB.selectUser(username, true) != null)
                     {
                         errors.add("Username is already in the database.");
+                        usernameErrors++;
+                    }
+                    
+                    if (usernameErrors == 0) {
+                        request.setAttribute("username", username);
                     }
                     
                     //Validate email
+                    int emailErrors = 0;
                     
                     if (email == null || email.trim().isEmpty())
                         {
                             errors.add("Email is required.");
+                            emailErrors++;
                         }
                     
                     if (email.length() < 5)
                     {
                         errors.add("Email must be more than 5 characters.");
+                        emailErrors++;
                     }
                     
                     if (email.contains("@") == false)
                     {
                         errors.add("Email must contain @ symbol.");
+                        emailErrors++;
                     }
                     
                     if (email.indexOf(".") <= email.indexOf("@"))
                     {
                         errors.add("Email must contain a period after the @ symbol.");
+                        emailErrors++;
                     }
                     
                     if (GroupDB.selectUser(email, false) != null)
                     {
                         errors.add("Email is already in the database.");
+                        emailErrors++;
+                    }
+                    
+                    if (emailErrors == 0) {
+                        request.setAttribute("email", email);
                     }
                     
                     //Validate password
+                    int passwordErrors = 0;
                     
                     if (password == null || password.trim().isEmpty())
                     {
                         errors.add("Password is required.");
+                        passwordErrors++;
                     }
                     
                     if (password.length() < 10)
                     {
                         errors.add("Password must be more than 10 characters.");
+                        passwordErrors++;
+                    }
+                    
+                    if (passwordErrors == 0) {
+                        request.setAttribute("password", password);
                     }
                     
                     // if errors dont change url
                     // if no errors message in and at login
+                    if (errors.isEmpty()) {
+                        newUser = new User(username, email, password);
+                        GroupDB.insert(newUser);
+                        url = "/login.jsp";
+                    } else {
+                        request.setAttribute("errors", errors);
+                    }
                     
                     break;
                 } catch (NamingException ex) {
