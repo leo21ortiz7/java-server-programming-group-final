@@ -18,14 +18,20 @@
         <h2>${message}</h2>
         <form action="Public" method="post" class="register">
             <input type="hidden" name="action" value="register">
-            <label>Username: </label>
-            <input type="text" name="username">
+            <div class="input_container">
+                <label>Username: </label>
+                <input type="text" name="username">
+            </div>
             <br>
-            <label>Email: </label>
-            <input type="text" name="email">
+            <div class="input_container">
+                <label>Email: </label>
+                <input type="text" name="email">
+            </div>
             <br>
-            <label>Password: </label>
-            <input type="text" name="password">
+            <div class="input_container">
+                <label>Password: </label>
+                <input type="text" name="password">
+            </div>
             <br>
             <input type="submit" value="Register">
         </form>
