@@ -25,15 +25,15 @@
             <input type="hidden" name="action" value="register">
             <div class="input_container">
                 <label>Username: </label>
-                <input type="text" name="username">
+                <input type="text" name="username" value="${username}">
             </div>
             <div class="input_container">
                 <label>Email: </label>
-                <input type="text" name="email">
+                <input type="text" name="email" value="${email}">
             </div>
             <div class="input_container">
                 <label>Password: </label>
-                <input type="text" name="password">
+                <input type="text" name="password" value="${password}">
             </div>
             <input type="submit" value="Register">
         </form>
