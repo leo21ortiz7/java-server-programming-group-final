@@ -26,6 +26,10 @@
                     <tr>
                         <td>${user.value.username}</td>
                         <td>${user.value.email}</td>
+                        <form>
+                            <input type="hidden" name="action" value="visitUser">
+                            <input type="submit" value="Visit Page">
+                        </form>
                     </tr>
                 </c:forEach>
             </Table>
