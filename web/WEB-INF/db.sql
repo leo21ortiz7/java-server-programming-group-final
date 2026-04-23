@@ -33,7 +33,7 @@ CREATE TABLE `users` (
   `userid` int NOT NULL,
   `username` varchar(20) NOT NULL,
   `email` varchar(40) NOT NULL,
-  `password` varchar(40) NOT NULL
+  `password` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -41,9 +41,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `username`, `email`, `password`) VALUES
-(1, 'leoXX11Gamer5000', 'leo@email.com', 'Passwrod1234567890'),
-(2, 'bigB0ssG4m3R', 'nelly.nellyson@gmail.com', 'TotallyRad45!'),
-(3, 'MuggoYT', 'mugman@gmail.com', 'mugman2044');
+-- (1, 'leoXX11Gamer5000', 'leo@email.com', 'Passwrod1234567890'),
+-- (2, 'bigB0ssG4m3R', 'nelly.nellyson@gmail.com', 'TotallyRad45!'),
+-- (3, 'MuggoYT', 'mugman@gmail.com', 'mugman2044');
 
 --
 -- Indexes for dumped tables
