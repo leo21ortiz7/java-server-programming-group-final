@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -173,6 +175,46 @@ public class Public extends HttpServlet {
                     if (password.length() < 10)
                     {
                         errors.add("Password must be more than 10 characters.");
+                        passwordErrors++;
+                    }
+                                        
+                    // password regex
+                    // https://regexone.com/lesson/character_ranges
+                    // https://regexone.com/lesson/matching_characters
+                    
+                    Pattern p = Pattern.compile("[A-Z]");
+                    Matcher m = p.matcher(password);
+                    
+                    if(m.find())
+                    {
+                        errors.add("Password must include an uppercase letter.");
+                        passwordErrors++;
+                    }
+                    
+                    Pattern pa = Pattern.compile("[a-z]");
+                    Matcher ma = pa.matcher(password);
+                    
+                    if(ma.find())
+                    {
+                        errors.add("Password must include a lowercase letter.");
+                        passwordErrors++;
+                    }
+                    
+                    Pattern pat = Pattern.compile("[0-9]");
+                    Matcher mat = pat.matcher(password);
+                    
+                    if(mat.find())
+                    {
+                        errors.add("Password must include a number.");
+                        passwordErrors++;
+                    }
+                    
+                    Pattern patt = Pattern.compile("[!@#$%^&*?+=~_]");
+                    Matcher matc = patt.matcher(password);
+                    
+                    if(matc.find())
+                    {
+                        errors.add("Password must include one of these special characters: !@#$%^&*?+=~ .");
                         passwordErrors++;
                     }
                     
