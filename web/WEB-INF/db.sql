@@ -41,9 +41,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userid`, `username`, `email`, `password`) VALUES
--- (1, 'leoXX11Gamer5000', 'leo@email.com', 'Passwrod1234567890'),
--- (2, 'bigB0ssG4m3R', 'nelly.nellyson@gmail.com', 'TotallyRad45!'),
--- (3, 'MuggoYT', 'mugman@gmail.com', 'mugman2044');
+(1, 'leoXX11Gamer5000', 'leo@email.com', 'Passwrod1234567890'),
+(2, 'bigB0ssG4m3R', 'nelly.nellyson@gmail.com', 'TotallyRad45!'),
+(3, 'MuggoYT', 'mugman@gmail.com', 'mugman2044');
 
 --
 -- Indexes for dumped tables
