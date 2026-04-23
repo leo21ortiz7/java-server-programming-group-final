@@ -66,10 +66,6 @@ public class Private extends HttpServlet {
                     url = "/profile.jsp";
                     break;
                 }
-                case "visitUser": {
-                    url = "/visitUserPage";
-                    break;
-                }
                 case "goToAllUsers": {
                     url = "/allusers.jsp";
                     LinkedHashMap<Integer, User> users = new LinkedHashMap<Integer, User>();
