@@ -16,11 +16,7 @@
     <body>
         <%@include file="/nav.jsp" %>
         <h1>Register for our site!</h1>
-        <ul>
-            <c:forEach items="${errors}" var="error">
-                <li>${error}</li>
-            </c:forEach>
-        </ul>
+        
         <form action="Public" method="post" class="register">
             <input type="hidden" name="action" value="register">
             <div class="input_container">
@@ -34,6 +30,13 @@
             <div class="input_container">
                 <label>Password: </label>
                 <input type="text" name="password" value="${password}">
+            </div>
+            <div class="errors">
+                <ul>
+                    <c:forEach items="${errors}" var="error">
+                        <li>${error}</li>
+                    </c:forEach>
+                </ul>
             </div>
             <input type="submit" value="Register">
         </form>

@@ -14,7 +14,7 @@
     <body>
         <%@include file="/nav.jsp" %>
         <h1>Login To Our Site</h1>
-        <h2>${message}</h2>
+<!--        <h2></h2>-->
         <form action="Public" method="post" class="login">
             <input type="hidden" name="action" value="login">
             <div class="input_container">
@@ -24,6 +24,9 @@
             <div class="input_container">
                 <label>Password: </label>
                 <input type="text" name="password">
+            </div>
+            <div class="errors">
+                ${message}
             </div>
             <input type="submit" value="login">
         </form>
