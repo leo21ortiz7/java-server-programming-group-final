@@ -32,11 +32,30 @@
                 <input type="hidden" name="action" value="goToEdit">
                 <input type="submit" value="Edit Info">
             </form>
+
             <ul>
                 <c:forEach items="${errors}" var="error">
                     <li>${error}</li>
-                </c:forEach>
+                    </c:forEach>
             </ul>
+        </div >
+        <div class="container"> 
+            <form action="Private" method="post">
+                <input type="hidden" name="action" value="">
+
+                <textarea name="post" id="post" maxlength="240"></textarea>
+
+                <input type="submit" value="Post">
+            </form>
         </div>
-    </body>
+
+        <c:forEach items="${statusid}" var="blogPost">
+            <ol>
+                <li>${status}</li>
+            </ol>
+        
+            <input type="button" id="deletePost" value="Delete Post">
+        </c:forEach>
+
+</body>
 </html>

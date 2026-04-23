@@ -181,4 +181,9 @@ public class GroupDB {
 
         return errors;
     }
+    
+//    public static LinkedHashMap<Integer, Status> selectStatuses()
+//    {
+//        return status;
+//    }
 }
