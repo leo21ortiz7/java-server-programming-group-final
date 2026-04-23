@@ -18,6 +18,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.catalina.realm.SecretKeyCredentialHandler;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -95,6 +96,9 @@ public class Public extends HttpServlet {
                     String username = request.getParameter("username");
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
+                    String hash = "";
+                    
+                    SecretKeyCredentialHandler ch;
                     
                     User test = new User();
                     test = GroupDB.selectUser(username, true);
@@ -183,7 +187,21 @@ public class Public extends HttpServlet {
                     // if errors dont change url
                     // if no errors message in and at login
                     if (errors.isEmpty()) {
-                        newUser = new User(username, email, password);
+                        try {
+                            ch = new SecretKeyCredentialHandler();
+                            ch.setAlgorithm("PBKDF2WithHmacSHA256");
+                            ch.setKeyLength(256);
+                            ch.setSaltLength(16);
+                            ch.setIterations(4096);
+
+                            hash = ch.mutate(password);
+                        } catch (Exception ex) {
+                            LOG.log(Level.SEVERE, null, ex);
+                            errors.add("Error with hashing algorithm.");
+                        }
+                        
+                        
+                        newUser = new User(username, email, hash);
                         GroupDB.insert(newUser);
                         url = "/login.jsp";
                     } else {

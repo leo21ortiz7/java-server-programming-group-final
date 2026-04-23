@@ -19,7 +19,7 @@
 
             <form action="Private" method="post">
                 <input type="hidden" name="action" value="edit">
-                <label>Email:</label>s
+                <label>Email:</label>
                 <div class="input_container">
                     <input type="text" name="newEmail" value="${loggedInUser.email}">
                 </div>
