@@ -189,7 +189,7 @@ public class Public extends HttpServlet {
                     Pattern p = Pattern.compile("[A-Z]");
                     Matcher m = p.matcher(password);
                     
-                    if(m.find())
+                    if(!m.find())
                     {
                         errors.add("Password must include an uppercase letter.");
                         passwordErrors++;
@@ -198,7 +198,7 @@ public class Public extends HttpServlet {
                     Pattern pa = Pattern.compile("[a-z]");
                     Matcher ma = pa.matcher(password);
                     
-                    if(ma.find())
+                    if(!ma.find())
                     {
                         errors.add("Password must include a lowercase letter.");
                         passwordErrors++;
@@ -207,7 +207,7 @@ public class Public extends HttpServlet {
                     Pattern pat = Pattern.compile("[0-9]");
                     Matcher mat = pat.matcher(password);
                     
-                    if(mat.find())
+                    if(!mat.find())
                     {
                         errors.add("Password must include a number.");
                         passwordErrors++;
@@ -216,7 +216,7 @@ public class Public extends HttpServlet {
                     Pattern patt = Pattern.compile("[!@#$%^&*?+=~_]");
                     Matcher matc = patt.matcher(password);
                     
-                    if(matc.find())
+                    if(!matc.find())
                     {
                         errors.add("Password must include one of these special characters: !@#$%^&*?+=~ .");
                         passwordErrors++;
