@@ -8,6 +8,7 @@ import business.User;
 import data.GroupDB;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -30,7 +31,7 @@ import javax.servlet.http.HttpSession;
 public class Public extends HttpServlet {
 
     private static final Logger LOG = Logger.getLogger(Public.class.getName());
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -45,7 +46,7 @@ public class Public extends HttpServlet {
 
         String url = "/login.jsp";
         String action = request.getParameter("action");
-        
+
         HttpSession session = request.getSession();
 
         ArrayList errors = new ArrayList();
@@ -56,7 +57,7 @@ public class Public extends HttpServlet {
 
         switch (action) {
             case "login": {
-                //I've given you the start of a login system here
+                SecretKeyCredentialHandler chv;
 
                 String username = request.getParameter("username");
                 String email = request.getParameter("email");
@@ -64,7 +65,14 @@ public class Public extends HttpServlet {
 
                 try {
                     User user = GroupDB.selectUser(username, true);
-                    if (user == null || !password.equals(user.getPassword())) {
+
+                    chv = new SecretKeyCredentialHandler();
+                    chv.setAlgorithm("PBKDF2WithHmacSHA256");
+                    chv.setKeyLength(256);
+                    chv.setSaltLength(16);
+                    chv.setIterations(4096);
+
+                    if (user == null || !chv.matches(password, user.getPassword())) {
                         request.setAttribute("message", "invalid credentials");
                     } else {
                         User loggedInUser = new User(username, email, password);
@@ -72,10 +80,13 @@ public class Public extends HttpServlet {
                         //this forwards to the private controller with an action value
                         url = "/Private?action=gotoProfile";
                     }
-                    
+
                 } catch (NamingException | SQLException ex) {
                     errors.add("Database down. Try again later.");
                     LOG.log(Level.SEVERE, "*** Server down", ex);
+                } catch (NoSuchAlgorithmException ex) {
+                    errors.add("hasher down.");
+                    LOG.log(Level.SEVERE, "*** Hasher down", ex);
                 }
 
                 break;
@@ -90,142 +101,127 @@ public class Public extends HttpServlet {
                 try {
                     // Validation for new user here
                     User newUser = new User();
-                    
+
                     url = "/register.jsp";
-                    
+
                     LinkedHashMap<Integer, User> Users = GroupDB.selectUsers();
-                    
+
                     String username = request.getParameter("username");
                     String email = request.getParameter("email");
                     String password = request.getParameter("password");
                     String hash = "";
-                    
+
                     SecretKeyCredentialHandler ch;
-                    
+
                     User test = new User();
                     test = GroupDB.selectUser(username, true);
-                    
+
                     //validate username
                     int usernameErrors = 0;
-                    
-                    if (username == null || username.trim().isEmpty())
-                    {
+
+                    if (username == null || username.trim().isEmpty()) {
                         errors.add("Username is required.");
                         usernameErrors++;
                     }
-                    
-                    if (username.length() < 4 || username.length() > 20)
-                    {
+
+                    if (username.length() < 4 || username.length() > 20) {
                         errors.add("Username must be between 4-20 characters inclusive.");
                         usernameErrors++;
                     }
-                    
-                    if (GroupDB.selectUser(username, true) != null)
-                    {
+
+                    if (GroupDB.selectUser(username, true) != null) {
                         errors.add("Username is already in the database.");
                         usernameErrors++;
                     }
-                    
+
                     if (usernameErrors == 0) {
                         request.setAttribute("username", username);
                     }
-                    
+
                     //Validate email
                     int emailErrors = 0;
-                    
-                    if (email == null || email.trim().isEmpty())
-                        {
-                            errors.add("Email is required.");
-                            emailErrors++;
-                        }
-                    
-                    if (email.length() < 5)
-                    {
+
+                    if (email == null || email.trim().isEmpty()) {
+                        errors.add("Email is required.");
+                        emailErrors++;
+                    }
+
+                    if (email.length() < 5) {
                         errors.add("Email must be more than 5 characters.");
                         emailErrors++;
                     }
-                    
-                    if (email.contains("@") == false)
-                    {
+
+                    if (email.contains("@") == false) {
                         errors.add("Email must contain @ symbol.");
                         emailErrors++;
                     }
-                    
-                    if (email.lastIndexOf(".") <= email.indexOf("@"))
-                    {
+
+                    if (email.lastIndexOf(".") <= email.indexOf("@")) {
                         errors.add("Email must contain a period after the @ symbol.");
                         emailErrors++;
                     }
-                    
-                    if (GroupDB.selectUser(email, false) != null)
-                    {
+
+                    if (GroupDB.selectUser(email, false) != null) {
                         errors.add("Email is already in the database.");
                         emailErrors++;
                     }
-                    
+
                     if (emailErrors == 0) {
                         request.setAttribute("email", email);
                     }
-                    
+
                     //Validate password
                     int passwordErrors = 0;
-                    
-                    if (password == null || password.trim().isEmpty())
-                    {
+
+                    if (password == null || password.trim().isEmpty()) {
                         errors.add("Password is required.");
                         passwordErrors++;
                     }
-                    
-                    if (password.length() < 10)
-                    {
+
+                    if (password.length() < 10) {
                         errors.add("Password must be more than 10 characters.");
                         passwordErrors++;
                     }
-                                        
+
                     // password regex
                     // https://regexone.com/lesson/character_ranges
                     // https://regexone.com/lesson/matching_characters
-                    
                     Pattern p = Pattern.compile("[A-Z]");
                     Matcher m = p.matcher(password);
-                    
-                    if(!m.find())
-                    {
+
+                    if (!m.find()) {
                         errors.add("Password must include an uppercase letter.");
                         passwordErrors++;
                     }
-                    
+
                     Pattern pa = Pattern.compile("[a-z]");
                     Matcher ma = pa.matcher(password);
-                    
-                    if(!ma.find())
-                    {
+
+                    if (!ma.find()) {
                         errors.add("Password must include a lowercase letter.");
                         passwordErrors++;
                     }
-                    
+
                     Pattern pat = Pattern.compile("[0-9]");
                     Matcher mat = pat.matcher(password);
-                    
-                    if(!mat.find())
-                    {
+
+                    if (!mat.find()) {
                         errors.add("Password must include a number.");
                         passwordErrors++;
                     }
-                    
+
                     Pattern patt = Pattern.compile("[!@#$%^&*?+=~_]");
                     Matcher matc = patt.matcher(password);
-                    
-                    if(!matc.find())
-                    {
+
+                    if (!matc.find()) {
                         errors.add("Password must include one of these special characters: !@#$%^&*?+=~ .");
                         passwordErrors++;
                     }
-                    
+
                     if (passwordErrors == 0) {
                         request.setAttribute("password", password);
                     }
-                    
+
                     // if errors dont change url
                     // if no errors message in and at login
                     if (errors.isEmpty()) {
@@ -241,15 +237,14 @@ public class Public extends HttpServlet {
                             LOG.log(Level.SEVERE, null, ex);
                             errors.add("Error with hashing algorithm.");
                         }
-                        
-                        
+
                         newUser = new User(username, email, hash);
                         GroupDB.insert(newUser);
                         url = "/login.jsp";
                     } else {
                         request.setAttribute("errors", errors);
                     }
-                    
+
                     break;
                 } catch (NamingException ex) {
                     Logger.getLogger(Public.class.getName()).log(Level.SEVERE, null, ex);
