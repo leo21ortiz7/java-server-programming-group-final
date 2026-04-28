@@ -2,12 +2,12 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     
     <filter>
-        <filter-name>Security Filter</filter-name>
-        <filter-class>filters.SecurityFilter</filter-class>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>filter.SecurityFilter</filter-class>
     </filter>
     
     <filter-mapping>
-        <filter-name>SecuriryFilter</filter-name>
+        <filter-name>SecurityFilter</filter-name>
         <url-pattern>/Private</url-pattern>
     </filter-mapping>
     
