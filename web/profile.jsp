@@ -27,7 +27,7 @@
     <body>
         <div class="container">
             <%@include file="/nav.jsp" %>
-            <h1>Welcome ${loggedInUser.username}</h1>
+            <h1>Welcome <c:out value="${loggedInUser.username}" /></h1>
             <form action="Private" method="post">
                 <input type="hidden" name="action" value="goToEdit">
                 <input type="submit" value="Edit Info">

@@ -21,11 +21,11 @@
                 <input type="hidden" name="action" value="edit">
                 <label>Email:</label>
                 <div class="input_container">
-                    <input type="text" name="newEmail" value="${loggedInUser.email}">
+                    <input type="text" name="newEmail" <c:out value="${loggedInUser.email}"/>>
                 </div>
                 <label>Password:</label>
                 <div class="input_container">
-                    <input type="text" name="newPassword" value="${loggedInUser.password}">
+                    <input type="text" name="newPassword" <c:out value="${loggedInUser.password}"/>>
                 </div>
                 <input type="submit" value="Submit">
                 
