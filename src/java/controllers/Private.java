@@ -25,7 +25,7 @@ import javax.servlet.http.HttpSession;
  * @author Fred Scott Southeast Community College INFO
  */
 public class Private extends HttpServlet {
-    
+
     private static final Logger LOG = Logger.getLogger(Private.class.getName());
 
     /**
@@ -39,29 +39,25 @@ public class Private extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         try {
             String url = "/profile.jsp";
             String action = request.getParameter("action");
-            
+
             HttpSession session = request.getSession();
-            
+
             ArrayList errors = new ArrayList();
-            
+
             User accessGrantedUser = new User();
             User loggedInUser = null;
-            
-            
+
             if (session.getAttribute("loggedInUser") != null) {
-              accessGrantedUser = (User) session.getAttribute("loggedInUser");
-              loggedInUser = GroupDB.selectUser(accessGrantedUser.getUsername(), true);
+                accessGrantedUser = (User) session.getAttribute("loggedInUser");
+                loggedInUser = GroupDB.selectUser(accessGrantedUser.getUsername(), true);
             }
-            
+
             //if the user isn't logged in, direct them to the Public controller
-            if(loggedInUser == null) {
-                response.sendRedirect("Public");
-                return;
-            } else switch (action) {
+            switch (action) {
                 case "goToProfile": {
                     url = "/profile.jsp";
                     break;
@@ -69,7 +65,7 @@ public class Private extends HttpServlet {
                 case "goToAllUsers": {
                     url = "/allusers.jsp";
                     LinkedHashMap<Integer, User> users = new LinkedHashMap<Integer, User>();
-                    
+
                     try {
                         users = GroupDB.selectUsers();
                         request.setAttribute("users", users);
@@ -77,7 +73,7 @@ public class Private extends HttpServlet {
                         errors.add("No users found.");
                         LOG.log(Level.SEVERE, "*** sql select fail", ex);
                     }
-                    
+
                     break;
                 }
                 case "goToEdit": {
@@ -88,26 +84,24 @@ public class Private extends HttpServlet {
                     url = "/profile.jsp";
                     String newEmail = request.getParameter("newEmail");
                     String newPassword = request.getParameter("newPassword");
-                    
+
                     // Validate edited user
-                    
                     errors.addAll(GroupDB.validateEmail(newEmail));
                     errors.addAll(GroupDB.validatePassword(newPassword));
-                    
+
                     if (errors.isEmpty()) {
                         request.setAttribute("rows", GroupDB.update(loggedInUser, newEmail, newPassword));
                     } else {
                         url = "/edit.jsp";
                     }
-                    
+
                     break;
                 }
             }
-            
+
             session.setAttribute("loggedInUser", loggedInUser);
             request.setAttribute("errors", errors);
-            
-            
+
             getServletContext().getRequestDispatcher(url).forward(request, response);
         } catch (NamingException ex) {
             Logger.getLogger(Private.class.getName()).log(Level.SEVERE, null, ex);
